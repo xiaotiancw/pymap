@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>map</title>
+    <style type="text/css">
+        body, html, #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        #up-map-div {
+            width: 300px;
+            height: 100px;
+            top: 30px;
+            left: 30px;
+            position: absolute;
+            z-index: 9999;
+            border: 1px solid blue;
+            background-color: #FFFFFF;
+        }
+
+
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=kyFONjXmnfDGyV0E36cGefTQdhuE0rGs">
+        //v3.0版本的引用方式：src="http://api.map.baidu.com/api?v=3.0&ak=您的密钥"
+    </script>
+    <script src="http://mapv.baidu.com/build/mapv.min.js"></script>
+</head>
+
+<body>
+<div id="allmap"></div>
+
+<div id="up-map-div">
+悬浮div，让它悬浮在地图上面
+</div>
+
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(116.331398,39.897445);
+	map.centerAndZoom(point,12);
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.setMapStyle({
+        style: 'midnight'
+    });
+
+	function myFun(result){
+		var cityName = result.name;
+		map.setCenter(cityName);
+		//alert("当前定位城市:"+cityName);
+	}
+	//var myCity = new BMap.LocalCity();
+	//myCity.get(myFun);
+
+
+    //var randomCount = 300;
+
+    var data = ["北京市海淀区上地10街10号", "杭州市江干区学源街18号"];
+
+    // 创建地址解析器实例
+    var myGeo = new BMap.Geocoder();
+    // 将地址解析结果显示在地图上，并调整地图视野
+    myGeo.getPoint("云南省昆明市富民县欧华小区", function(point){
+        if (point) {
+            map.centerAndZoom(point, 5);
+            map.addOverlay(new BMap.Marker(point));
+        }
+     });
+
+
+</script>
+
+</body>
+</html>

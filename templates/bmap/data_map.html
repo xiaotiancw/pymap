@@ -1,0 +1,177 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=no, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/xadmin.css' %}">
+    <script src="{% static 'lib/layui/layui.js' %}" charset="utf-8"></script>
+    <script src="{% static 'js/xadmin.js' %}" charset="utf-8"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    <style type="text/css">
+        body, html, #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        #up-map-div {
+            width: 300px;
+            height: 100px;
+            top: 30px;
+            left: 30px;
+            position: absolute;
+            z-index: 9999;
+            border: 1px solid blue;
+            background-color: #FFFFFF;
+        }
+
+
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=kyFONjXmnfDGyV0E36cGefTQdhuE0rGs">
+        //v3.0版本的引用方式：src="http://api.map.baidu.com/api?v=3.0&ak=您的密钥"
+    </script>
+
+    <style>
+        .layui-side-child {
+            width: 160px !important;
+            left: 0px;
+            bottom: 0px !important;
+            border-right: 1px solid #eee;
+            background-color: #fff;
+        }
+
+        .layui-side-child .layui-side-scroll {
+            width: 170px;
+        }
+
+        .layui-side-child .layui-nav {
+            padding: 10px 0;
+            width: 160px;
+            border-radius: 0;
+            background: none
+        }
+
+        .layui-side-child .layui-nav-child {
+            border-radius: 0;
+        }
+
+        .layui-side-child .layui-nav .layui-nav-title a,
+        .layui-side-child .layui-nav .layui-nav-title a:hover,
+        .layui-side-child .layui-nav-itemed > a {
+            color: #666 !important;
+        }
+
+        .layui-side-child .layui-nav-itemed .layui-nav-child {
+            margin-bottom: 10px;
+            background: none !important;
+        }
+
+        .layui-side-child .layui-nav .layui-nav-item a {
+            height: 30px;
+            line-height: 30px;
+            color: #666;
+        }
+
+        .layui-side-child .layui-nav .layui-nav-item a:hover {
+            background: none !important;
+        }
+
+        .layui-side-child .layui-nav .layui-nav-child a {
+            color: #999 !important;
+        }
+
+        .layui-side-child .layui-nav .layui-nav-more {
+            display: none;
+        }
+
+        .layui-side-child .layui-nav-tree .layui-this,
+        .layui-side-child .layui-nav-tree .layui-this > a,
+        .layui-side-child .layui-nav-tree .layui-nav-child dd.layui-this,
+        .layui-side-child .layui-nav-tree .layui-nav-child dd.layui-this a {
+            background: none;
+            color: #5FB878 !important;
+        }
+
+        .layui-side-child .layui-nav .layui-nav-child a:hover {
+            color: #009688 !important
+        }
+
+        .layui-side-child .layui-nav-bar {
+            background-color: #5FB878;
+        }
+
+
+
+        #allmap {
+            left: 160px
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+
+
+
+
+<div class="layui-side layui-side-child">
+    <div class="layui-side-scroll">
+        <!-- 左侧子菜单 -->
+        <ul class="layui-nav layui-nav-tree site-demo-table-nav">
+            <li class="layui-nav-item layui-this">
+                <a href="/demo/table.html">简单数据表格</a>
+            </li>
+            <li class="layui-nav-item ">
+                <a href="/demo/table/auto.html">列宽自动分配<span class="layui-badge-dot"></span></a>
+            </li>
+
+            <li class="layui-nav-item ">
+                <a href="/demo/table/data.html">赋值已知数据</a>
+            </li>
+            <li class="layui-nav-item ">
+                <a href="/demo/table/static.html">转化静态表格</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div id="allmap">
+
+</div>
+
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(116.331398,39.897445);
+	map.centerAndZoom(point,12);
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.setMapStyle({
+        style: 'midnight'
+    });
+
+	function myFun(result){
+		var cityName = result.name;
+		map.setCenter(cityName);
+		//alert("当前定位城市:"+cityName);
+	}
+	var myCity = new BMap.LocalCity();
+	myCity.get(myFun);
+</script>
+</body>
+</html>
